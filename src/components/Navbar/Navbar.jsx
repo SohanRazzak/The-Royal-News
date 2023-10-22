@@ -1,61 +1,52 @@
-// import { Link } from "react-router-dom";
-// import userIcon from "../../assets/user.png"
-
-// const Navbar = () => {
-//     const user = null
-//     const navlink = <>
-//                     <Link to="/" className="font-semibold text-lg">
-//                     Home
-//                 </Link>
-//                 <Link to="/about" className="font-semibold text-lg">
-//                     About
-//                 </Link>
-//                 <Link to="/career" className="font-semibold text-lg">
-//                     Career
-//                 </Link>
-//     </>
-//     return (
-//         <nav className="p-4 flex justify-center items-center">
-//             <div className="flex justify-center flex-1">
-//                 <div className="flex gap-6">
-//                 {navlink}
-//                 </div>
-//             </div>
-//                 <img className="w-11 mr-3 rounded-full" src={user?.photoURL || userIcon} alt="User" />
-//                 <Link
-//                     to="/login"
-//                     className="font-semibold text-lg px-6 py-2 bg-gray-800 hover:bg-blue-800 text-white rounded-lg"
-//                 >
-//                     Login
-//                 </Link>
-//         </nav>
-//     );
-// };
-
-// export default Navbar;
-
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
-import { FaBars } from "react-icons/fa"
+import { FaBars } from "react-icons/fa";
+import { AuthContext } from "../../AuthProvider/AuthProvider";
+import { toast } from "react-toastify";
 
 const Navbar = () => {
-    const navlink = <>
-                <Link to="/" className="block md:flex font-semibold text-lg">
+    const { loggedUser, logOut } = useContext(AuthContext);
+    const navlink = (
+        <>
+            <Link
+                to="/"
+                className="block hover:text-blue-600 hover:bg-white pl-3 md:flex font-semibold text-lg"
+            >
                 Home
             </Link>
-            <Link to="/about" className="block md:flex font-semibold text-lg">
+            <Link
+                to="/about"
+                className="block hover:text-blue-600 hover:bg-white pl-3 md:flex font-semibold text-lg"
+            >
                 About
             </Link>
-            <Link to="/career" className="block md:flex font-semibold text-lg">
+            <Link
+                to="/career"
+                className="block hover:text-blue-600 hover:bg-white pl-3 md:flex font-semibold text-lg"
+            >
                 Career
             </Link>
-</>
-
+            {
+                !loggedUser && <Link
+                to="/create-user"
+                className="block hover:text-blue-600 hover:bg-white pl-3 md:flex font-semibold text-lg"
+            >
+                Register
+            </Link>
+            }
+        </>
+    );
 
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
     const toggleMobileMenu = () => {
         setIsMobileMenuOpen(!isMobileMenuOpen);
+    };
+
+    const handleLogout = () => {
+        logOut()
+            .then(() => toast("Logged Out!"))
+            .catch((err) => toast(err.code));
     };
 
     return (
@@ -68,7 +59,7 @@ const Navbar = () => {
                             className="text-white hover:text-gray-300 p-2 border-gray-500 border-2 bg-gray-200 rounded-md"
                             onClick={toggleMobileMenu}
                         >
-                            <FaBars className="text-gray-800 text-2xl"/>
+                            <FaBars className="text-gray-800 text-2xl" />
                         </button>
                     </div>
                     <div className="hidden md:flex gap-6 justify-center">
@@ -77,18 +68,38 @@ const Navbar = () => {
                     </div>
                 </div>
 
-                <div className="flex items-center">
-                    {/* Login button for PC version */}
-                    <button className="font-semibold text-lg px-6 py-2 bg-gray-800 hover:bg-blue-800 text-white rounded-lg focus:outline-none focus:shadow-outline">
-                        Login
-                    </button>
+                <div className="flex items-center gap-3">
+                    {loggedUser ? (
+                        <>
+                            {loggedUser.photoURL ? (
+                                <img
+                                    className="w-11 h-11 rounded-full"
+                                    src={loggedUser?.photoURL}
+                                    alt={loggedUser.displayName}
+                                />
+                            ): null}
+                            <button
+                                onClick={handleLogout}
+                                className="font-semibold text-lg px-6 py-2 bg-gray-800 hover:bg-blue-800 text-white rounded-lg focus:outline-none focus:shadow-outline"
+                            >
+                                Logout
+                            </button>
+                        </>
+                    ) : (
+                        <Link
+                            to="/login"
+                            className="font-semibold text-lg px-6 py-2 bg-gray-800 hover:bg-blue-800 text-white rounded-lg focus:outline-none focus:shadow-outline"
+                        >
+                            Login
+                        </Link>
+                    )}
                 </div>
             </div>
 
             {/* Mobile menu */}
             {isMobileMenuOpen && (
-                <div className="md:hidden mt-2 space-y-2 border p-5 bg-gray-200 max-w-sm rounded-md shadow-lg">
-                        {navlink}
+                <div className="absolute md:hidden mt-2 space-y-2 border p-5 bg-gray-200 w-[320px] rounded-md shadow-lg">
+                    {navlink}
                 </div>
             )}
         </nav>

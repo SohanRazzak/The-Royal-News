@@ -1,7 +1,26 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Navbar from "../Navbar/Navbar";
+import { useContext } from "react";
+import { AuthContext } from "../../AuthProvider/AuthProvider";
+import { toast } from "react-toastify";
 
 const Login = () => {
+    
+    const location = useLocation();
+    const moveTo = useNavigate();
+    const { logIn } = useContext(AuthContext)
+    const handleLogin = (e)=>{
+        e.preventDefault()
+        const form = new FormData(e.currentTarget)
+        const email = form.get("email")
+        const password = form.get("password")
+        logIn(email, password)
+        .then(() => {
+            toast("Login Successfull!")
+            location.state ? moveTo(location.state) : moveTo("/");
+        })
+        .catch(err => toast(err.code))
+    }
     return (
         <div className="bg-[#F3F3F3] h-screen mb-12">
             <Navbar></Navbar>
@@ -9,6 +28,7 @@ const Login = () => {
             <div className="w-3/4 lg:w-1/3 mx-auto mt-10 bg-white p-6">
                 <h2 className="text-2xl font-semibold mb-4 text-center border-b pb-5">Login your account</h2>
                 <form
+                    onSubmit={handleLogin}
                     className="px-6 pt-6 pb-8"
                 >
                     <div className="mb-4">
