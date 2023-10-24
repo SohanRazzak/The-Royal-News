@@ -27,6 +27,14 @@ const Navbar = () => {
                 Career
             </Link>
             {
+                loggedUser && <Link
+                to="/profile"
+                className="block hover:text-blue-600 hover:bg-white pl-3 md:flex font-semibold text-lg"
+            >
+                Profile
+            </Link>
+            }
+            {
                 !loggedUser && <Link
                 to="/create-user"
                 className="block hover:text-blue-600 hover:bg-white pl-3 md:flex font-semibold text-lg"

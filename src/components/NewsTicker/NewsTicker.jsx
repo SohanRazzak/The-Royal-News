@@ -6,10 +6,10 @@ import { FaBolt, FaBullseye } from "react-icons/fa";
 const NewsTicker = () => {
     const [news, setNews] = useState([])
     useEffect(()=>{
-        fetch("/news.json")
+        fetch("../../news.json")
         .then(res => res.json())
         .then(data => setNews(data))
-    })
+    },[])
 
     return (
         <div className="flex px-4 bg-gray-100 py-3 font-semibold">

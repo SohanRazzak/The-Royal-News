@@ -1,8 +1,9 @@
-import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth";
 import { PropTypes } from "prop-types";
 import { useEffect, useState } from "react";
 import { createContext } from "react";
 import auth from "../config/firebase.config";
+import { HashLoader } from "react-spinners";
 
 export const AuthContext = createContext(null)
 
@@ -17,6 +18,10 @@ const AuthProvider = ({children}) => {
 
     const logIn = (email, password) =>{
         return signInWithEmailAndPassword(auth, email, password)
+    }
+
+    const socialLogin = (provider)=>{
+        return signInWithPopup(auth, provider)
     }
 
     const logOut = ()=> {
@@ -35,11 +40,16 @@ const AuthProvider = ({children}) => {
         loggedUser,
         createUser,
         logIn,
+        socialLogin,
         logOut
     }
 
     if(isLoading){
-        return ''
+        return (
+            <div className="h-screen flex justify-center items-center">
+                <HashLoader color="#D72050" size="80px"/>
+            </div>
+        )
     }
         return (
             <AuthContext.Provider value={contexObject}>
