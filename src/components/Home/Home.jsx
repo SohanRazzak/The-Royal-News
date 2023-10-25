@@ -4,8 +4,11 @@ import NewsTicker from "../NewsTicker/NewsTicker";
 import LeftSideBar from "../LeftSideBar/LeftSideBar";
 import RightSideBar from "../RightSideBar/RightSideBar";
 import NewsCard from "../NewsCard/NewsCard";
+import { useContext } from "react";
+import { AuthContext } from "../../AuthProvider/AuthProvider";
 
 const Home = () => {
+    const {news} = useContext(AuthContext)
     return (
         <div>
             <Header/>
@@ -15,13 +18,13 @@ const Home = () => {
                 <div>
                     <LeftSideBar/>
                 </div>
-                <div className="border-2 h-screen md:col-span-2 lg:col-span-3">
+                <div className="md:col-span-2 lg:col-span-3">
                 <h3 className="flex items-center gap-2 text-xl font-semibold py-4 pl-2">The Royal News: Home Page</h3>
-
-                <NewsCard/>
-
+                {
+                    news.map(singleNews => <NewsCard key={singleNews._id} singleNews={singleNews}></NewsCard>)
+                }
                 </div>
-                <div className="border-2 h-screen">
+                <div>
                     <RightSideBar/>
                 </div>
             </div>

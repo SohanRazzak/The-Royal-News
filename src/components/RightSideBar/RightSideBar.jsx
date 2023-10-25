@@ -21,10 +21,10 @@ const RightSideBar = () => {
     return (
         <div>
             <h3 className="flex items-center gap-2 text-xl font-semibold py-4 pl-2">
-                Login With
+            <span className="h-5 w-2 bg-rose-700 block"></span>  Login With
             </h3>
             <div className="mx-auto mb-5">
-            <div className="flex gap-3 flex-col px-3 justify-center items-center">
+            <div className="flex gap-3 md:flex-col px-3 justify-center items-center">
                     <button onClick={()=>handleSocialLogin(GoogleProvider)} className="px-4 py-2 rounded-lg border-teal-600 border-2 text-xl font-semibold hover:text-white hover:bg-teal-500 w-full text-teal-600 flex items-center gap-3 justify-center"> <FaGoogle/> Google</button>
                     <button onClick={()=>handleSocialLogin(GithubProvider)} className="px-4 py-2 rounded-lg border-fuchsia-600 border-2 text-xl font-semibold hover:text-white hover:bg-fuchsia-500 w-full text-fuchsia-600 flex items-center gap-3 justify-center"> <FaGithub/> Github</button>
                 </div>

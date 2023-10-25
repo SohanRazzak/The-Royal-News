@@ -10,6 +10,7 @@ export const AuthContext = createContext(null)
 const AuthProvider = ({children}) => {
     const [isLoading, setIsLoading] = useState(true)
     const [loggedUser, setLoggedUser] = useState(null)
+    const [news, setNews] = useState([])
     
 
     const createUser = (email, password) => {
@@ -29,11 +30,16 @@ const AuthProvider = ({children}) => {
     }
 
     useEffect(()=>{
+        fetch("/news.json")
+        .then(res => res.json())
+        .then(data => setNews(data))
+
         const unsub = onAuthStateChanged(auth, user =>{
             user ? setLoggedUser(user) : setLoggedUser(null)
             setIsLoading(false)
         })
         return ()=> unsub()
+        
     },[])
 
     const contexObject = {
@@ -41,7 +47,8 @@ const AuthProvider = ({children}) => {
         createUser,
         logIn,
         socialLogin,
-        logOut
+        logOut,
+        news
     }
 
     if(isLoading){
