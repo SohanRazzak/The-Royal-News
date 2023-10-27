@@ -8,9 +8,12 @@ import { HashLoader } from "react-spinners";
 export const AuthContext = createContext(null)
 
 const AuthProvider = ({children}) => {
+
     const [isLoading, setIsLoading] = useState(true)
     const [loggedUser, setLoggedUser] = useState(null)
     const [news, setNews] = useState([])
+    const mostViewed = [...news].sort((a,b) => b.total_view - a.total_view).slice(0,4)
+    
     
 
     const createUser = (email, password) => {
@@ -48,7 +51,8 @@ const AuthProvider = ({children}) => {
         logIn,
         socialLogin,
         logOut,
-        news
+        news,
+        mostViewed
     }
 
     if(isLoading){

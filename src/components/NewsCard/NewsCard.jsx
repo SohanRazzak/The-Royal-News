@@ -1,14 +1,41 @@
 import { PropTypes } from "prop-types";
+import { useState } from "react";
 import { FaBookmark, FaEye, FaShare } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import StarRatings from "react-star-ratings";
+import { toast } from "react-toastify";
 
 const NewsCard = ({singleNews}) => {
 
-    console.log(singleNews);
+    const { details, author, rating, image_url, title, total_view, _id } = singleNews
+    const [isBookmarkedLocal, setIsBookmarkedLocal] = useState(null)
 
-    const { details, author, rating, image_url, title, total_view } = singleNews
-    console.log(singleNews);
+
+    const handleBookmark = (id) =>{
+        const bookmarked = localStorage.getItem("bookamrkedNews")
+        if (bookmarked == null){
+            localStorage.setItem("bookamrkedNews", JSON.stringify([id]))
+        }
+        else{
+            const prevBookmarks = JSON.parse(bookmarked)
+            const isExistBookmark = prevBookmarks.find(item => item == id)
+            if(!isExistBookmark){
+                localStorage.setItem("bookamrkedNews", JSON.stringify([...prevBookmarks, id]))
+            }
+            else{
+                toast("Already Bookmarked!!")
+            }
+        }
+        setIsBookmarkedLocal(true)
+    }
+
+    const isBookmarked = (id)=>{
+        const bookmarked = localStorage.getItem("bookamrkedNews")
+        const prevBookmarks = JSON.parse(bookmarked)
+        if(prevBookmarks !== null){
+            return prevBookmarks.find(item => item == id) ? true : false
+        }
+    }
 
     return (
         <div className="m-2 rounded-lg border mb-5">
@@ -28,10 +55,10 @@ const NewsCard = ({singleNews}) => {
                 </div>
                 <div className="flex items-center space-x-4 text-2xl">
                     <button className="text-gray-600">
-                        <FaBookmark />
+                        <FaBookmark onClick={()=> handleBookmark(_id)} className={isBookmarkedLocal ? "text-rose-600" : "" || isBookmarked(_id)? "text-rose-600" : ""}/>
                     </button>
                     <button className="text-gray-600">
-                        <FaShare />
+                        <FaShare onClick={()=> toast("You Can Implement Social Share React Component Easily!!")}/>
                     </button>
                 </div>
             </div>

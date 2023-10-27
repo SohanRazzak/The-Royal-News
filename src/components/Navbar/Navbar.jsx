@@ -10,26 +10,26 @@ const Navbar = () => {
         <>
             <Link
                 to="/"
-                className="block hover:text-blue-600 hover:bg-white pl-3 md:flex font-semibold text-lg"
+                className="block hover:text-blue-600 hover:bg-white pl-3 py-2 rounded-md md:flex font-semibold text-lg"
             >
                 Home
             </Link>
             <Link
                 to="/about"
-                className="block hover:text-blue-600 hover:bg-white pl-3 md:flex font-semibold text-lg"
+                className="block hover:text-blue-600 hover:bg-white pl-3 py-2 rounded-md md:flex font-semibold text-lg"
             >
                 About
             </Link>
             <Link
                 to="/career"
-                className="block hover:text-blue-600 hover:bg-white pl-3 md:flex font-semibold text-lg"
+                className="block hover:text-blue-600 hover:bg-white pl-3 py-2 rounded-md md:flex font-semibold text-lg"
             >
                 Career
             </Link>
             {
                 loggedUser && <Link
                 to="/profile"
-                className="block hover:text-blue-600 hover:bg-white pl-3 md:flex font-semibold text-lg"
+                className="block hover:text-blue-600 hover:bg-white pl-3 py-2 rounded-md md:flex font-semibold text-lg"
             >
                 Profile
             </Link>
@@ -37,7 +37,7 @@ const Navbar = () => {
             {
                 !loggedUser && <Link
                 to="/create-user"
-                className="block hover:text-blue-600 hover:bg-white pl-3 md:flex font-semibold text-lg"
+                className="block hover:text-blue-600 hover:bg-white pl-3 py-2 md:flex font-semibold text-lg"
             >
                 Register
             </Link>
@@ -58,7 +58,7 @@ const Navbar = () => {
     };
 
     return (
-        <nav className="p-4">
+        <nav className="px-4 py-2 sticky top-0 z-10 bg-white">
             <div className="flex md:justify-between md:items-center">
                 <div className="flex  items-center md:justify-center flex-1">
                     {/* Hamburger icon for mobile */}
@@ -80,11 +80,13 @@ const Navbar = () => {
                     {loggedUser ? (
                         <>
                             {loggedUser.photoURL ? (
-                                <img
+                                <Link to='/profile'>
+                                    <img
                                     className="w-11 h-11 rounded-full"
                                     src={loggedUser?.photoURL}
                                     alt={loggedUser.displayName}
                                 />
+                                </Link>
                             ): null}
                             <button
                                 onClick={handleLogout}
@@ -106,7 +108,7 @@ const Navbar = () => {
 
             {/* Mobile menu */}
             {isMobileMenuOpen && (
-                <div className="absolute md:hidden mt-2 space-y-2 border p-5 bg-gray-200 w-[320px] rounded-md shadow-lg">
+                <div className="absolute md:hidden mt-2 ml-3 p-5 bg-gray-200 w-[320px] rounded-lg py-2 shadow-lg">
                     {navlink}
                 </div>
             )}

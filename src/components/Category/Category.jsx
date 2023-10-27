@@ -45,7 +45,7 @@ const Category = () => {
             <Header />
             <NewsTicker/>
             <Navbar />
-            <div className="grid md:grid-cols-4 lg:grid-cols-5 max-w-7xl gap-5 my-6 md:my-10 mx-auto">
+            <div className="grid md:grid-cols-4 lg:grid-cols-5 max-w-7xl gap-3 lg:gap-5 my-6 md:my-10 mx-auto">
                 <div>
                     <LeftSideBar />
                 </div>
@@ -56,7 +56,7 @@ const Category = () => {
                     {thisCategoryNews.length === 0 ? <p className="text-xl text-gray-600 text-center my-8 font-medium flex flex-col justify-center items-center gap-5 "><FaBan className="text-center text-rose-400 text-5xl"/> Nothing found on this category!</p> : ""}
                     {thisCategoryNews.map(singleNews => <NewsCard key={singleNews._id} singleNews={singleNews}/>)}
                 </div>
-                <div>
+                <div className="mx-auto">
                     <RightSideBar />
                 </div>
             </div>
