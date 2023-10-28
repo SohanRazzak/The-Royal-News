@@ -1,10 +1,13 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import Header from "../Header/Header";
 import Navbar from "../Navbar/Navbar";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
 
 const Profile = () => {
     const { loggedUser } = useContext(AuthContext);
+    useEffect(()=>{
+        window.scrollTo(0,0)
+    },[])
     return (
         <div>
             <Header />
