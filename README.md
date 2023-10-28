@@ -1,6 +1,6 @@
 # The-Royal-News
 
-**Live Link:
+**Live Link: https://the-royal-news.web.app
 
 **CREDINTIALS:
 User Email: `s0@gmail.com`
