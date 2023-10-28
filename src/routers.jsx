@@ -30,7 +30,7 @@ const routers = createBrowserRouter([
             },
             {
                 path: "/news/:newsLink",
-                element: <NewsDetails></NewsDetails>
+                element: <PrivateRoute><NewsDetails/></PrivateRoute>
             },
             {
                 path: "/category/:catID",

@@ -6,7 +6,6 @@ import { AuthContext } from "../../AuthProvider/AuthProvider";
 const LeftSideBar = () => {
     const [categories , setCategories] = useState([])
     const {mostViewed} = useContext(AuthContext)
-    console.log(mostViewed);
 
     useEffect(()=>{
         fetch("/categories.json")

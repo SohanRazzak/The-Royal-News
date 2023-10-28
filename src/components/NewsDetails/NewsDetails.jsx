@@ -15,7 +15,6 @@ const NewsDetails = () => {
     const editorPicks = [...news]
         .filter((n) => n.others_info.is_trending == true)
         .slice(0, 3);
-    console.log(editorPicks);
 
     useEffect(() => {
         fetch("/news.json")
